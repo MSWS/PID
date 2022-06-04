@@ -29,12 +29,6 @@ def __init__():
         cx, HEIGHT - BALL_HEIGHT, cx + BALL_HEIGHT, HEIGHT, fill="red")
     canvas.pack()
     opidx, opidy = PID(), PID()
-    opidx.propWeight = 0.15
-    opidx.derivWeight = 0.1
-    opidx.intWeight = 0.01
-    opidy.propWeight = 0.15
-    opidy.derivWeight = 0.1
-    opidy.intWeight = 0.01
     loop(canvas)
 
 
@@ -58,16 +52,16 @@ def move(canvas: tk.Canvas):
     ovx += otvx
     ovy += otvy
 
-    ovx = clamp(ovx, -power, power)
-    ovy = clamp(ovy, -power, power)
+    # ovx = clamp(ovx, -power, power)
+    # ovy = clamp(ovy, -power, power)
 
-    # ovy += 0.1
+    # ovy += 0.25
 
     canvas.move(object, ovx, ovy)
 
-    t = time() * 1000.0 / 400
+    t = time() * 1000.0 / 300
     rad = WIDTH / 4
-    # canvas.moveto(target, sin(t) * rad + WIDTH / 2)
+    canvas.moveto(target, sin(t) * rad + WIDTH / 2, cos(t) * rad + HEIGHT / 2)
 
 
 def moveTarget(canvas, mouse):
@@ -80,10 +74,10 @@ def clamp(value, minValue, maxValue):
 
 class PID():
     def __init__(self):
-        self.propWeight = 1.0
-        self.intWeight = 0.01
+        self.propWeight = 0.2
+        self.intWeight = 0
         self.derivWeight = 0.2
-        self.intGain = 0.005
+        self.intGain = 0.05
         self.intSum = 0.0
         self.lastCheck = 0
         self.lastError = 0
